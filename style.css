@@ -1,0 +1,487 @@
+/* ==========================================================
+   BIO VERONICA — Linktree personalizado
+   Mobile-first, identidade visual baseada no site oficial
+   Paleta: bege quente + dourado + marrom profundo
+   ========================================================== */
+
+/* ----- RESET ----- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ----- DESIGN TOKENS ----- */
+:root {
+    /* Cores (alinhadas com site-veronica) */
+    --color-bg: #F2EDE3;
+    --color-bg-soft: #FAF8F5;
+    --color-surface: #FFFFFF;
+    --color-text: #3D3229;
+    --color-text-soft: #8B7355;
+    --color-text-muted: #B8A495;
+    --color-accent: #C9A96E;
+    --color-accent-hover: #B5975D;
+    --color-accent-soft: #E8DCC8;
+    --color-line: #D9CDB8;
+
+    /* WhatsApp */
+    --color-whatsapp: #25D366;
+    --color-whatsapp-dark: #1DA851;
+
+    /* Tipografia */
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: 'Playfair Display', Georgia, serif;
+
+    /* Espaçamento fluido */
+    --space-2xs: 0.25rem;
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 2.5rem;
+
+    /* Bordas */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-full: 999px;
+
+    /* Sombras (sutis e profissionais) */
+    --shadow-sm: 0 1px 3px rgba(61, 50, 41, 0.05);
+    --shadow-md: 0 4px 14px rgba(61, 50, 41, 0.08);
+    --shadow-lg: 0 10px 30px rgba(61, 50, 41, 0.10);
+
+    /* Transições */
+    --t-fast: 150ms ease;
+    --t-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --t-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Layout */
+    --max-width: 480px;
+    --safe-top: env(safe-area-inset-top, 0);
+    --safe-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* ----- BASE ----- */
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.5;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-image:
+        radial-gradient(circle at 0% 0%, rgba(201, 169, 110, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(201, 169, 110, 0.06) 0%, transparent 50%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+button { font: inherit; cursor: pointer; }
+
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+/* ----- ACESSIBILIDADE: reduzir movimento ----- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    [data-animate] {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* ----- CONTAINER PRINCIPAL ----- */
+.bio-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding:
+        calc(var(--space-2xl) + var(--safe-top))
+        var(--space-lg)
+        calc(var(--space-xl) + var(--safe-bottom));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ==========================================================
+   CABEÇALHO
+   ========================================================== */
+.bio-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+    width: 100%;
+}
+
+/* Avatar com símbolo Psi */
+.bio-avatar {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto var(--space-lg);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    animation: avatar-pulse 4s ease-in-out infinite;
+}
+
+.bio-avatar::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1px solid var(--color-accent-soft);
+    opacity: 0.6;
+}
+
+.bio-avatar-symbol {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--color-bg);
+    line-height: 1;
+    font-weight: 500;
+    user-select: none;
+}
+
+@keyframes avatar-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+.bio-name {
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 5vw, 1.75rem);
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.2;
+    margin-bottom: var(--space-xs);
+    letter-spacing: -0.01em;
+}
+
+.bio-role {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-accent-hover);
+    margin-bottom: var(--space-md);
+}
+
+.bio-description {
+    font-size: 0.95rem;
+    color: var(--color-text-soft);
+    line-height: 1.6;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 0 var(--space-sm);
+}
+
+/* ==========================================================
+   LINKS / BOTÕES
+   ========================================================== */
+.bio-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    width: 100%;
+    margin-bottom: var(--space-2xl);
+}
+
+.bio-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md) var(--space-lg);
+    text-align: left;
+    color: var(--color-text);
+    transition:
+        transform var(--t-base),
+        box-shadow var(--t-base),
+        border-color var(--t-base),
+        background-color var(--t-base);
+    position: relative;
+    overflow: hidden;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Brilho sutil que se move no hover */
+.bio-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(201, 169, 110, 0.08),
+        transparent
+    );
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.bio-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-accent);
+    background: var(--color-bg-soft);
+}
+
+.bio-link:hover::before {
+    left: 100%;
+}
+
+.bio-link:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: var(--shadow-sm);
+    transition-duration: 80ms;
+}
+
+/* Botão primário (Agendar) — destaque dourado */
+.bio-link-primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-bg);
+}
+
+.bio-link-primary .bio-link-subtitle {
+    color: rgba(242, 237, 227, 0.85);
+}
+
+.bio-link-primary:hover {
+    background: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+}
+
+.bio-link-primary::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.15),
+        transparent
+    );
+}
+
+/* Botão WhatsApp — destaque verde */
+.bio-link-whatsapp {
+    background: var(--color-whatsapp);
+    border-color: var(--color-whatsapp);
+    color: #FFFFFF;
+}
+
+.bio-link-whatsapp .bio-link-subtitle {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.bio-link-whatsapp:hover {
+    background: var(--color-whatsapp-dark);
+    border-color: var(--color-whatsapp-dark);
+}
+
+.bio-link-whatsapp::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.18),
+        transparent
+    );
+}
+
+/* Conteúdo dos botões */
+.bio-link-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-accent-soft);
+    border-radius: var(--radius-md);
+    transition: transform var(--t-base);
+}
+
+.bio-link-primary .bio-link-icon,
+.bio-link-whatsapp .bio-link-icon {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.bio-link:hover .bio-link-icon {
+    transform: scale(1.08) rotate(-3deg);
+}
+
+.bio-link-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.bio-link-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: inherit;
+}
+
+.bio-link-subtitle {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    line-height: 1.3;
+}
+
+/* ==========================================================
+   RODAPÉ
+   ========================================================== */
+.bio-footer {
+    text-align: center;
+    width: 100%;
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-line);
+}
+
+.bio-footer-text {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--color-text-soft);
+    margin-bottom: var(--space-sm);
+    line-height: 1.5;
+}
+
+.bio-footer-credit {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    letter-spacing: 0.05em;
+}
+
+.bio-footer-credit span:first-child {
+    color: var(--color-accent);
+    font-size: 0.85rem;
+}
+
+/* ==========================================================
+   ANIMAÇÕES DE ENTRADA
+   ========================================================== */
+[data-animate] {
+    opacity: 0;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+[data-animate="fade-up"] {
+    transform: translateY(20px);
+}
+
+[data-animate="fade-down"] {
+    transform: translateY(-20px);
+}
+
+[data-animate].visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================
+   RESPONSIVIDADE
+   ========================================================== */
+
+/* Telas muito pequenas (320px) */
+@media (max-width: 359px) {
+    .bio-container {
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+    }
+    .bio-avatar {
+        width: 80px;
+        height: 80px;
+    }
+    .bio-avatar-symbol { font-size: 2.5rem; }
+    .bio-link {
+        padding: var(--space-sm) var(--space-md);
+        gap: var(--space-sm);
+    }
+    .bio-link-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.25rem;
+    }
+    .bio-link-title { font-size: 0.875rem; }
+    .bio-link-subtitle { font-size: 0.7rem; }
+}
+
+/* Tablets e telas médias */
+@media (min-width: 481px) {
+    .bio-container {
+        padding-top: var(--space-3xl, 4rem);
+        padding-bottom: var(--space-3xl, 4rem);
+    }
+    .bio-avatar {
+        width: 110px;
+        height: 110px;
+    }
+    .bio-avatar-symbol { font-size: 3.5rem; }
+}
+
+/* Desktop — destaca com sombra e centraliza com fundo */
+@media (min-width: 768px) {
+    body {
+        padding: var(--space-xl) 0;
+        background: var(--color-bg);
+    }
+    .bio-container {
+        background: var(--color-bg);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-lg);
+        margin: var(--space-xl) auto;
+        border: 1px solid var(--color-line);
+    }
+    .bio-links {
+        gap: var(--space-md);
+    }
+}
+
+/* Telas muito grandes */
+@media (min-width: 1024px) {
+    .bio-container {
+        margin: var(--space-2xl) auto;
+    }
+}
