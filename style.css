@@ -18,11 +18,15 @@
     --color-bg-soft: #FAF8F5;
     --color-surface: #FFFFFF;
     --color-text: #3D3229;
-    --color-text-soft: #8B7355;
-    --color-text-muted: #B8A495;
+    /* text-soft e text-muted escurecidos para atingir WCAG AA (>=4.5:1)
+       sobre --color-bg. Antes: #8B7355 (3.84) e #B8A495 (2.05). */
+    --color-text-soft: #6F5A3C;
+    --color-text-muted: #7A6857;
     --color-accent: #C9A96E;
     --color-accent-hover: #B5975D;
     --color-accent-soft: #E8DCC8;
+    /* Dourado escuro para texto pequeno (o --color-accent claro nao passa AA) */
+    --color-accent-text: #7F6238;
     --color-line: #D9CDB8;
 
     /* WhatsApp */
@@ -190,7 +194,7 @@ button { font: inherit; cursor: pointer; }
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--color-accent-hover);
+    color: var(--color-accent-text);
     margin-bottom: var(--space-md);
 }
 
@@ -418,6 +422,201 @@ button { font: inherit; cursor: pointer; }
 [data-animate].visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* ==========================================================
+   PÁGINA DE CONTEÚDO (Conheça meu trabalho)
+   ========================================================== */
+
+.bio-container--conteudo {
+    align-items: stretch;
+    text-align: left;
+}
+
+.voltar {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-soft);
+    /* min-height garante alvo de toque >= 44px (WCAG 2.5.5) */
+    min-height: 44px;
+    padding: var(--space-xs) var(--space-sm);
+    margin: 0 0 var(--space-lg) calc(var(--space-sm) * -1);
+    border-radius: var(--radius-sm);
+    transition: color var(--t-fast), background-color var(--t-fast);
+}
+
+.voltar:hover {
+    color: var(--color-text);
+    background: var(--color-bg-soft);
+}
+
+.voltar span {
+    transition: transform var(--t-base);
+}
+
+.voltar:hover span {
+    transform: translateX(-3px);
+}
+
+.conteudo-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+.conteudo-header .bio-avatar {
+    margin-bottom: var(--space-md);
+}
+
+.bloco {
+    margin-bottom: var(--space-2xl);
+}
+
+/* Mais espaço acima do título do que abaixo (craft floor) */
+.bloco-titulo {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.25;
+    margin-bottom: var(--space-sm);
+    text-wrap: balance;
+}
+
+.bloco-titulo::after {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 2px;
+    margin-top: var(--space-sm);
+    background: var(--color-accent);
+    border-radius: var(--radius-full);
+}
+
+.bloco-texto {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-text-soft);
+    margin-bottom: var(--space-md);
+    overflow-wrap: break-word;
+}
+
+.bloco-texto:last-child {
+    margin-bottom: 0;
+}
+
+/* Lista de formação — sem cards, só marcação e ritmo */
+.lista-simples {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.lista-simples li {
+    position: relative;
+    padding-left: var(--space-lg);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-soft);
+}
+
+.lista-simples li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+}
+
+/* Passos numerados por ordem real do processo */
+.passos {
+    list-style: none;
+    counter-reset: passo;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+.passo {
+    position: relative;
+    padding-left: var(--space-xl);
+}
+
+.passo::before {
+    counter-increment: passo;
+    content: counter(passo);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-bg);
+    background: var(--color-accent);
+    border-radius: 50%;
+}
+
+.passo h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-2xs);
+}
+
+.passo p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-text-soft);
+}
+
+/* Ficha técnica — chave/valor alinhado, sem virar card */
+.ficha {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-line);
+}
+
+.ficha-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--color-line);
+}
+
+.ficha-item dt {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.ficha-item dd {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    font-weight: 600;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.bloco--cta {
+    margin-bottom: var(--space-xl);
+}
+
+.bloco--cta .bio-link {
+    width: 100%;
 }
 
 /* ==========================================================
