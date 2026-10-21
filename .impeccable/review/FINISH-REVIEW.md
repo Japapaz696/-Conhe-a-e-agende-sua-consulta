@@ -28,6 +28,13 @@ REQUISITO do contrato, não contra um card.
 "Registro profissional — CRP pendente de confirmação". Nada é publicado até a
 revisão visual do usuário e a aprovação explícita.
 
+**Revisão posterior (2026-10-21, commit `a624547`):** o usuário preferiu **não
+exibir** o aviso de pendência. A linha de CRP foi removida do rodapé das duas
+páginas — fica só a frase. Nenhum registro é afirmado nem negado. Um comentário
+no código marca onde a linha volta, no formato final (`CRP 00/00000`), quando a
+cliente informar o número. Verificado: zero ocorrências de "CRP"/"pendente" no
+texto renderizado, 100/100/100 nas duas páginas, CTA intacto. Nada publicado.
+
 ## persistence — pass
 
 - `PRODUCT.md` existe na branch (commit `c652fb1`).
