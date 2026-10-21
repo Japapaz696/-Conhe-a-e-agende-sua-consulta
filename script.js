@@ -1,95 +1,72 @@
 /* ==========================================================
    BIO VERONICA — Interações
-   - Animações de entrada com IntersectionObserver
-   - Feedback tátil em dispositivos touch
-   - Pequenos refinamentos
+   O itinerário: a rota se desenha uma vez; as paradas respondem ao toque.
    ========================================================== */
 
 (function () {
     'use strict';
 
-    // ---------- Animações de entrada ----------
-    const animatedElements = document.querySelectorAll('[data-animate]');
+    var trajeto = document.querySelector('.trajeto');
 
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const el = entry.target;
-                        const delay = parseInt(el.dataset.delay || '0', 10);
-                        setTimeout(() => {
-                            el.classList.add('visible');
-                        }, delay * 90); // 90ms entre cada item
-                        observer.unobserve(el);
-                    }
-                });
-            },
-            { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
-        );
-
-        animatedElements.forEach((el) => observer.observe(el));
-    } else {
-        // Fallback: mostrar tudo de uma vez
-        animatedElements.forEach((el) => el.classList.add('visible'));
+    // ---------- A ROTA SE DESENHA ----------
+    // Um único momento de movimento: o traço cresce do topo até o destino.
+    // A linha é criada aqui para que o conteúdo nunca dependa de JS.
+    if (trajeto && !trajeto.querySelector('.rota-linha')) {
+        var linha = document.createElement('span');
+        linha.className = 'rota-linha';
+        linha.setAttribute('aria-hidden', 'true');
+        trajeto.insertBefore(linha, trajeto.firstChild);
     }
 
-    // ---------- Feedback tátil no toque ----------
-    // Adiciona classe "pressed" ao tocar para feedback visual imediato
-    const links = document.querySelectorAll('.bio-link');
+    // ---------- ENTRADA ESCALONADA ----------
+    // Aplicada só depois do carregamento, para o conteúdo nunca depender de JS.
+    var semMovimento = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    links.forEach((link) => {
-        link.addEventListener(
-            'touchstart',
-            () => {
-                link.classList.add('pressed');
-            },
-            { passive: true }
-        );
+    if (!semMovimento) {
+        var origem = document.querySelector('.origem');
+        if (origem) origem.setAttribute('data-entra', '1');
 
-        link.addEventListener(
-            'touchend',
-            () => {
-                setTimeout(() => link.classList.remove('pressed'), 150);
-            },
-            { passive: true }
-        );
+        var paradas = document.querySelectorAll('.parada');
+        paradas.forEach(function (p, i) {
+            p.setAttribute('data-entra', String(Math.min(i + 2, 4)));
+        });
 
-        // Cancela estado se o usuário arrastar para fora
-        link.addEventListener(
-            'touchcancel',
-            () => {
-                link.classList.remove('pressed');
-            },
-            { passive: true }
-        );
-    });
+        var chegada = document.querySelector('.chegada');
+        if (chegada) chegada.setAttribute('data-entra', '4');
+    }
 
-    // ---------- Vibração suave ao clicar (quando suportado) ----------
-    links.forEach((link) => {
-        link.addEventListener('click', () => {
-            if (navigator.vibrate) {
-                navigator.vibrate(8); // 8ms — discreto
-            }
+    // ---------- FEEDBACK AO TOQUE ----------
+    var alvos = document.querySelectorAll('.parada');
+
+    alvos.forEach(function (el) {
+        el.addEventListener('touchstart', function () {
+            el.classList.add('pressionado');
+        }, { passive: true });
+
+        el.addEventListener('touchend', function () {
+            setTimeout(function () { el.classList.remove('pressionado'); }, 150);
+        }, { passive: true });
+
+        el.addEventListener('touchcancel', function () {
+            el.classList.remove('pressionado');
+        }, { passive: true });
+
+        el.addEventListener('click', function () {
+            if (navigator.vibrate) navigator.vibrate(8); // discreto
         });
     });
 
-    // ---------- Previne zoom duplo-toque no iOS ----------
-    let lastTouchEnd = 0;
-    document.addEventListener(
-        'touchend',
-        (e) => {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                e.preventDefault();
-            }
-            lastTouchEnd = now;
-        },
-        { passive: false }
-    );
+    // ---------- ZOOM DUPLO-TOQUE (iOS) ----------
+    var ultimoToque = 0;
+    document.addEventListener('touchend', function (e) {
+        var agora = Date.now();
+        if (agora - ultimoToque <= 300) e.preventDefault();
+        ultimoToque = agora;
+    }, { passive: false });
 
-    // ---------- Log de confirmação em ambiente de desenvolvimento ----------
+    // ---------- CONFIRMAÇÃO EM DESENVOLVIMENTO ----------
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        console.log('Bio Veronica carregada. Ambiente de desenvolvimento.');
+        console.log('Bio Veronica — itinerário carregado (desenvolvimento).');
     }
 })();

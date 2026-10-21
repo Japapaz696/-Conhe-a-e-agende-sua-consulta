@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#F2EDE3">
-    <meta name="description" content="Veronica Reis Santana da Paz — Psicóloga. Atendimento psicológico humanizado, baseado em evidências e voltado para o cuidado com a saúde emocional. Agende sua consulta.">
+    <meta name="description" content="Veronica Reis Santana da Paz — Psicóloga. Terapia Cognitivo-Comportamental, online e presencial em Belo Horizonte. Agende sua consulta pelo WhatsApp.">
     <meta name="author" content="Veronica Reis Santana da Paz">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph -->
     <meta property="og:type" content="profile">
     <meta property="og:title" content="Veronica Reis Santana da Paz — Psicóloga">
-    <meta property="og:description" content="Atendimento psicológico humanizado, baseado em evidências e voltado para o cuidado com a saúde emocional.">
+    <meta property="og:description" content="Terapia Cognitivo-Comportamental, online e presencial em Belo Horizonte. Agende sua consulta pelo WhatsApp.">
     <meta property="og:locale" content="pt_BR">
     <meta property="profile:first_name" content="Veronica">
     <meta property="profile:last_name" content="Reis Santana da Paz">
@@ -27,129 +27,129 @@
 </head>
 <body>
 
-    <main class="bio-container" role="main">
+    <main class="rota" aria-labelledby="rota-titulo">
 
-        <!-- CABEÇALHO -->
-        <header class="bio-header" data-animate="fade-down">
-            <div class="bio-avatar" aria-hidden="true">
-                <span class="bio-avatar-symbol">Ψ</span>
-            </div>
+        <!-- ORIGEM: você está aqui -->
+        <header class="origem">
+            <p class="origem-marcador" aria-hidden="true">Você está aqui</p>
 
-            <h1 class="bio-name">Veronica Reis Santana da Paz</h1>
-            <p class="bio-role">Psicóloga</p>
+            <div class="origem-brasao" aria-hidden="true">Ψ</div>
 
-            <p class="bio-description">
-                Atendimento psicológico humanizado, baseado em evidências
-                e voltado para o cuidado com a saúde emocional.
+            <h1 class="origem-nome" id="rota-titulo">Veronica Reis<br>Santana da Paz</h1>
+
+            <p class="origem-funcao">
+                Psicóloga
+                <span class="origem-sep" aria-hidden="true">·</span>
+                Terapia Cognitivo-Comportamental
+            </p>
+
+            <p class="origem-texto">
+                Atendimento humano e baseado em evidências, para jovens,
+                adultos e casais. Online ou presencial, em Belo Horizonte.
             </p>
         </header>
 
-        <!-- LINKS PRINCIPAIS -->
+        <!-- A ROTA -->
         <!--
-            Atualizado em 2026-10-20. O serviço principal
-            (site-veronica.onrender.com) está suspenso (HTTP 503), então nenhum
-            botão desta bio aponta mais para ele.
+            Atualizado em 2026-10-21 (redesign). O serviço principal
+            (site-veronica.onrender.com) segue suspenso (HTTP 503), então
+            nenhuma parada desta rota aponta para ele.
 
-            1. "Agende sua consulta"  -> WhatsApp oficial já publicado nesta bio
-               (mesmo número do Instagram @veronicapazpsicologa). Substituir por
-               uma página própria de agendamento quando ela existir.
-            2. "Fale comigo pelo WhatsApp" -> WhatsApp oficial (já funcionava).
-            3. "Conheça meu trabalho" -> trabalho.html, nesta mesma bio, com
-               conteúdo profissional verificado (formação, abordagem e como
-               funcionam as sessões).
-            4. "Instagram" -> perfil oficial (já funcionava, não foi alterado).
-            5. "Conheça meu site" -> OCULTO temporariamente; código preservado
-               abaixo para reativar quando o serviço voltar.
+            Paradas, em ordem de percurso:
+              1. Agende sua consulta      -> WhatsApp oficial (destino)
+              2. Conheça meu trabalho     -> trabalho.html (desvio)
+              3. Fale pelo WhatsApp       -> WhatsApp oficial (desvio)
+              4. Instagram                -> perfil oficial (desvio)
+
+            "Conheça meu site" continua OCULTO; código preservado ao final,
+            para reativar quando o serviço voltar.
 
             Links originais que apontavam para o serviço suspenso:
               https://site-veronica.onrender.com/agendamento.html
               https://site-veronica.onrender.com
               https://site-veronica.onrender.com/sobre.html
         -->
-        <nav class="bio-links" aria-label="Links de contato e serviços">
+        <nav class="trajeto" aria-label="Percurso até o agendamento">
 
-            <!-- Agenda via WhatsApp até a página de agendamento própria existir -->
+            <!-- Destino -->
             <a href="https://wa.me/5531988836237?text=Ol%C3%A1%2C%20Veronica!%20Gostaria%20de%20agendar%20uma%20consulta%20psicol%C3%B3gica."
-               class="bio-link bio-link-primary"
-               data-animate="fade-up"
-               data-delay="1"
+               class="parada parada--destino"
+               data-parada="1"
                target="_blank"
                rel="noopener noreferrer">
-                <span class="bio-link-icon" aria-hidden="true">🧠</span>
-                <span class="bio-link-text">
-                    <span class="bio-link-title">Agende sua consulta</span>
-                    <span class="bio-link-subtitle">Online ou presencial</span>
+                <span class="parada-ponto" aria-hidden="true"></span>
+                <span class="parada-corpo">
+                    <span class="parada-rotulo">Destino</span>
+                    <span class="parada-titulo">Agende sua consulta</span>
+                    <span class="parada-nota">Resposta pelo WhatsApp oficial</span>
+                </span>
+            </a>
+
+            <!-- Desvios -->
+            <a href="trabalho.html"
+               class="parada parada--desvio"
+               data-parada="2"
+               rel="noopener noreferrer">
+                <span class="parada-ponto" aria-hidden="true"></span>
+                <span class="parada-corpo">
+                    <span class="parada-rotulo">Parada 2</span>
+                    <span class="parada-titulo">Conheça meu trabalho</span>
+                    <span class="parada-nota">Formação, abordagem e sessões</span>
                 </span>
             </a>
 
             <a href="https://wa.me/5531988836237?text=Ol%C3%A1%2C%20Veronica!%20Gostaria%20de%20saber%20mais%20sobre%20o%20atendimento%20psicol%C3%B3gico."
-               class="bio-link bio-link-whatsapp"
-               data-animate="fade-up"
-               data-delay="2"
+               class="parada parada--desvio"
+               data-parada="3"
                target="_blank"
                rel="noopener noreferrer">
-                <span class="bio-link-icon" aria-hidden="true">💬</span>
-                <span class="bio-link-text">
-                    <span class="bio-link-title">Fale comigo pelo WhatsApp</span>
-                    <span class="bio-link-subtitle">Resposta em horário comercial</span>
+                <span class="parada-ponto" aria-hidden="true"></span>
+                <span class="parada-corpo">
+                    <span class="parada-rotulo">Parada 3</span>
+                    <span class="parada-titulo">Tire uma dúvida no WhatsApp</span>
+                    <span class="parada-nota">Online ou presencial, 50 minutos</span>
+                </span>
+            </a>
+
+            <a href="https://www.instagram.com/veronicapazpsicologa/"
+               class="parada parada--desvio"
+               data-parada="4"
+               target="_blank"
+               rel="noopener noreferrer">
+                <span class="parada-ponto" aria-hidden="true"></span>
+                <span class="parada-corpo">
+                    <span class="parada-rotulo">Parada 4</span>
+                    <span class="parada-titulo">Instagram</span>
+                    <span class="parada-nota">@veronicapazpsicologa</span>
                 </span>
             </a>
 
             <!--
-                "Conheça meu site" — OCULTO TEMPORARIAMENTE (2026-10-20).
-                O site principal (site-veronica.onrender.com) está suspenso (HTTP 503)
-                e não há conteúdo adequado para substituí-lo sem os materiais oficiais
-                da cliente (logo, foto, CRP). O código fica preservado e comentado
-                para ser reativado quando o serviço voltar. Não excluir.
+                "Conheça meu site" — OCULTO (2026-10-21).
+                O site principal (site-veronica.onrender.com) está suspenso e não
+                há conteúdo adequado para substituí-lo sem os materiais oficiais
+                da cliente (logo, foto, CRP). Código preservado para reativação.
+                Não excluir.
 
             <a href="https://site-veronica.onrender.com"
-               class="bio-link"
-               data-animate="fade-up"
-               data-delay="99"
+               class="parada parada--desvio"
                target="_blank"
                rel="noopener noreferrer">
-                <span class="bio-link-icon" aria-hidden="true">🌐</span>
-                <span class="bio-link-text">
-                    <span class="bio-link-title">Conheça meu site</span>
-                    <span class="bio-link-subtitle">Informações completas</span>
+                <span class="parada-ponto" aria-hidden="true"></span>
+                <span class="parada-corpo">
+                    <span class="parada-rotulo">Parada</span>
+                    <span class="parada-titulo">Conheça meu site</span>
+                    <span class="parada-nota">Informações completas</span>
                 </span>
             </a>
             -->
 
-            <a href="https://www.instagram.com/veronicapazpsicologa/"
-               class="bio-link"
-               data-animate="fade-up"
-               data-delay="3"
-               target="_blank"
-               rel="noopener noreferrer">
-                <span class="bio-link-icon" aria-hidden="true">📸</span>
-                <span class="bio-link-text">
-                    <span class="bio-link-title">Instagram</span>
-                    <span class="bio-link-subtitle">@veronicapazpsicologa</span>
-                </span>
-            </a>
-
-            <!-- Conteúdo profissional verificado, dentro do próprio link da bio -->
-            <a href="trabalho.html"
-               class="bio-link"
-               data-animate="fade-up"
-               data-delay="4"
-               rel="noopener noreferrer">
-                <span class="bio-link-icon" aria-hidden="true">📋</span>
-                <span class="bio-link-text">
-                    <span class="bio-link-title">Conheça meu trabalho</span>
-                    <span class="bio-link-subtitle">Formação e abordagem</span>
-                </span>
-            </a>
-
         </nav>
 
-        <!-- RODAPÉ -->
-        <footer class="bio-footer" data-animate="fade-up" data-delay="5">
-            <p class="bio-footer-text">
-                Cuidar da saúde emocional é um ato de coragem.
-            </p>
-            <p class="bio-footer-credit">
+        <!-- CHEGADA -->
+        <footer class="chegada">
+            <p class="chegada-frase">Cuidar da saúde emocional é um ato de coragem.</p>
+            <p class="chegada-credito">
                 <span aria-hidden="true">Ψ</span>
                 <span>CRP válido no Conselho Regional de Psicologia</span>
             </p>

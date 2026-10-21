@@ -1,7 +1,8 @@
 /* ==========================================================
-   BIO VERONICA — Linktree personalizado
-   Mobile-first, identidade visual baseada no site oficial
-   Paleta: bege quente + dourado + marrom profundo
+   BIO VERONICA — "O itinerário da consulta"
+   Mobile-first. A página é a rota: origem -> paradas -> destino.
+   Paleta: papel bege + tinta marrom + dourado (compromisso de marca).
+   Estado é FORMA (linha fina/grossa, ponto vazado/cheio), cor é reservada.
    ========================================================== */
 
 /* ----- RESET ----- */
@@ -13,515 +14,502 @@
 
 /* ----- DESIGN TOKENS ----- */
 :root {
-    /* Cores (alinhadas com site-veronica) */
-    --color-bg: #F2EDE3;
-    --color-bg-soft: #FAF8F5;
-    --color-surface: #FFFFFF;
-    --color-text: #3D3229;
-    /* text-soft e text-muted escurecidos para atingir WCAG AA (>=4.5:1)
-       sobre --color-bg. Antes: #8B7355 (3.84) e #B8A495 (2.05). */
-    --color-text-soft: #6F5A3C;
-    --color-text-muted: #7A6857;
-    --color-accent: #C9A96E;
-    --color-accent-hover: #B5975D;
-    --color-accent-soft: #E8DCC8;
-    /* Dourado escuro para texto pequeno (o --color-accent claro nao passa AA) */
-    --color-accent-text: #7F6238;
-    --color-line: #D9CDB8;
+    /* Papel e tinta — identidade derivada do cartão profissional */
+    --papel:        #F2EDE3;
+    --papel-alto:   #FAF8F5;
+    --papel-fosco:  #E9E1D3;
+    --tinta:        #3D3229;
+    --tinta-soft:   #6F5A3C;   /* WCAG AA sobre --papel (>=4.5:1) */
+    --tinta-muted:  #7A6857;   /* WCAG AA sobre --papel (>=4.5:1) */
 
-    /* WhatsApp */
-    --color-whatsapp: #25D366;
-    --color-whatsapp-dark: #1DA851;
+    /* Dourado — reservado ao destino e à rota */
+    --dourado:        #C9A96E;
+    --dourado-forte:  #B08F52;
+    --dourado-tinta:  #7F6238;  /* texto pequeno AA */
+    --dourado-lavado: #E8DCC8;
+    /* Sobre o destino dourado, o texto secundário precisa de tinta escura (AA 4.9:1) */
+    --destino-suave:  #4A3A1C;
+
+    /* Rota */
+    --linha:        #D9CDB8;
+    --linha-forte:  #B8A495;
+
+    /* Contato */
+    --zap:       #25D366;
+    --zap-forte: #128C4A;
+    --zap-tinta: #0B5F33;
 
     /* Tipografia */
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-heading: 'Playfair Display', Georgia, serif;
+    --f-corpo:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --f-titulo: 'Playfair Display', Georgia, serif;
 
-    /* Espaçamento fluido */
-    --space-2xs: 0.25rem;
-    --space-xs: 0.5rem;
-    --space-sm: 0.75rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 2.5rem;
+    /* Espaço */
+    --e-2xs: 0.25rem;
+    --e-xs:  0.5rem;
+    --e-sm:  0.75rem;
+    --e-md:  1rem;
+    --e-lg:  1.5rem;
+    --e-xl:  2rem;
+    --e-2xl: 2.75rem;
 
-    /* Bordas */
-    --radius-sm: 8px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
-    --radius-xl: 28px;
-    --radius-full: 999px;
+    /* Raio — contido, não é vitrine de cards */
+    --r-sm: 8px;
+    --r-md: 12px;
+    --r-lg: 16px;
+    --r-full: 999px;
 
-    /* Sombras (sutis e profissionais) */
-    --shadow-sm: 0 1px 3px rgba(61, 50, 41, 0.05);
-    --shadow-md: 0 4px 14px rgba(61, 50, 41, 0.08);
-    --shadow-lg: 0 10px 30px rgba(61, 50, 41, 0.10);
+    /* Elevação — declarada uma vez, borda OU sombra */
+    --sombra-papel: 0 1px 2px rgba(61, 50, 41, 0.04), 0 10px 28px rgba(61, 50, 41, 0.07);
+    --sombra-destino: 0 2px 4px rgba(127, 98, 56, 0.12), 0 10px 26px rgba(127, 98, 56, 0.16);
 
-    /* Transições */
-    --t-fast: 150ms ease;
-    --t-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    --t-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    /* Movimento */
+    --m-rapido: 140ms cubic-bezier(0.22, 1, 0.36, 1);
+    --m-base:   260ms cubic-bezier(0.22, 1, 0.36, 1);
+    --m-rota:   1100ms cubic-bezier(0.16, 1, 0.3, 1);
 
     /* Layout */
-    --max-width: 480px;
-    --safe-top: env(safe-area-inset-top, 0);
-    --safe-bottom: env(safe-area-inset-bottom, 0);
+    --largura: 480px;
+    --goteira-rota: 40px;   /* recuo do texto em relação à linha da rota */
+    --seguro-topo: env(safe-area-inset-top, 0);
+    --seguro-base: env(safe-area-inset-bottom, 0);
 }
 
 /* ----- BASE ----- */
 html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: var(--font-body);
-    background: var(--color-bg);
-    color: var(--color-text);
+    font-family: var(--f-corpo);
+    background: var(--papel);
+    color: var(--tinta);
     line-height: 1.5;
     min-height: 100vh;
     min-height: 100dvh;
+    /* Textura de papel — veio do mundo, não é enfeite */
     background-image:
-        radial-gradient(circle at 0% 0%, rgba(201, 169, 110, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(201, 169, 110, 0.06) 0%, transparent 50%);
+        radial-gradient(circle at 12% -8%, rgba(201, 169, 110, 0.10) 0%, transparent 46%),
+        radial-gradient(circle at 96% 104%, rgba(201, 169, 110, 0.07) 0%, transparent 44%);
     background-attachment: fixed;
     overflow-x: hidden;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }
 
 img, svg { display: block; max-width: 100%; }
 
-button { font: inherit; cursor: pointer; }
-
 :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--dourado-forte);
     outline-offset: 3px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--r-sm);
 }
 
-/* ----- ACESSIBILIDADE: reduzir movimento ----- */
+/* Seleção e caret também pertencem ao mundo */
+::selection { background: var(--dourado-lavado); color: var(--tinta); }
+
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-    [data-animate] {
-        opacity: 1 !important;
-        transform: none !important;
-    }
-}
-
-/* ----- CONTAINER PRINCIPAL ----- */
-.bio-container {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding:
-        calc(var(--space-2xl) + var(--safe-top))
-        var(--space-lg)
-        calc(var(--space-xl) + var(--safe-bottom));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    .rota-linha { animation: none !important; transform: none !important; }
+    [data-entra] { opacity: 1 !important; transform: none !important; }
 }
 
 /* ==========================================================
-   CABEÇALHO
+   A ROTA — container
    ========================================================== */
-.bio-header {
-    text-align: center;
-    margin-bottom: var(--space-2xl);
-    width: 100%;
+.rota {
+    position: relative;
+    max-width: var(--largura);
+    margin: 0 auto;
+    padding:
+        calc(var(--e-2xl) + var(--seguro-topo))
+        var(--e-lg)
+        calc(var(--e-xl) + var(--seguro-base));
 }
 
-/* Avatar com símbolo Psi */
-.bio-avatar {
-    width: 96px;
-    height: 96px;
-    margin: 0 auto var(--space-lg);
+/* ==========================================================
+   ORIGEM — "você está aqui"
+   ========================================================== */
+.origem {
+    position: relative;
+    text-align: left;
+    margin-bottom: var(--e-2xl);
+    padding-left: var(--goteira-rota);
+}
+
+/* O ponto de origem, alinhado à rota */
+.origem::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0.55rem;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+    background: var(--dourado);
+    box-shadow: 0 0 0 4px var(--papel), 0 0 0 5px var(--dourado-lavado);
+}
+
+.origem-marcador {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--dourado-tinta);
+    margin-bottom: var(--e-md);
+}
+
+.origem-brasao {
+    width: 68px;
+    height: 68px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-md);
-    position: relative;
-    animation: avatar-pulse 4s ease-in-out infinite;
-}
-
-.bio-avatar::after {
-    content: '';
-    position: absolute;
-    inset: -6px;
     border-radius: 50%;
-    border: 1px solid var(--color-accent-soft);
-    opacity: 0.6;
-}
-
-.bio-avatar-symbol {
-    font-family: var(--font-heading);
-    font-size: 3rem;
-    color: var(--color-bg);
-    line-height: 1;
+    background: var(--papel-fosco);
+    border: 1px solid var(--dourado-lavado);
+    font-family: var(--f-titulo);
+    font-size: 2.1rem;
     font-weight: 500;
+    color: var(--dourado-tinta);
+    margin-bottom: var(--e-md);
     user-select: none;
 }
 
-@keyframes avatar-pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-}
-
-.bio-name {
-    font-family: var(--font-heading);
-    font-size: clamp(1.4rem, 5vw, 1.75rem);
+.origem-nome {
+    font-family: var(--f-titulo);
+    font-size: clamp(1.75rem, 7vw, 2.15rem);
     font-weight: 600;
-    color: var(--color-text);
-    line-height: 1.2;
-    margin-bottom: var(--space-xs);
+    line-height: 1.08;
     letter-spacing: -0.01em;
+    color: var(--tinta);
+    text-wrap: balance;
+    margin-bottom: var(--e-sm);
 }
 
-.bio-role {
-    font-size: 0.875rem;
+.origem-funcao {
+    font-size: 0.82rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-accent-text);
-    margin-bottom: var(--space-md);
+    letter-spacing: 0.1em;
+    color: var(--dourado-tinta);
+    margin-bottom: var(--e-md);
 }
 
-.bio-description {
+.origem-sep { opacity: 0.5; margin: 0 0.15em; }
+
+.origem-texto {
     font-size: 0.95rem;
-    color: var(--color-text-soft);
-    line-height: 1.6;
-    max-width: 360px;
-    margin: 0 auto;
-    padding: 0 var(--space-sm);
+    line-height: 1.65;
+    color: var(--tinta-soft);
+    max-width: 40ch;
 }
 
 /* ==========================================================
-   LINKS / BOTÕES
+   TRAJETO — a lista de paradas
    ========================================================== */
-.bio-links {
+.trajeto {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
-    width: 100%;
-    margin-bottom: var(--space-2xl);
+    gap: var(--e-md);
+    margin-bottom: var(--e-2xl);
+    padding-left: var(--goteira-rota);
 }
 
-.bio-link {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    background: var(--color-surface);
-    border: 1.5px solid var(--color-line);
-    border-radius: var(--radius-lg);
-    padding: var(--space-md) var(--space-lg);
-    text-align: left;
-    color: var(--color-text);
-    transition:
-        transform var(--t-base),
-        box-shadow var(--t-base),
-        border-color var(--t-base),
-        background-color var(--t-base);
+/* A linha da rota: um traço que se desenha uma vez */
+.rota-linha {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    bottom: 26px;
+    width: 2px;
+    background: var(--linha-forte);
+    border-radius: var(--r-full);
+    transform-origin: top center;
+    /* desenha de cima para baixo, uma vez */
+    animation: desenhar-rota var(--m-rota) forwards;
+    animation-delay: 120ms;
+    pointer-events: none;
+}
+
+@keyframes desenhar-rota {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+}
+
+/* ----- PARADA ----- */
+.parada {
     position: relative;
-    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--e-md);
+    padding: var(--e-md) var(--e-md) var(--e-md) var(--e-md);
+    border-radius: var(--r-lg);
+    color: var(--tinta);
+    transition:
+        background-color var(--m-base),
+        transform var(--m-base);
     -webkit-user-select: none;
     user-select: none;
 }
 
-/* Brilho sutil que se move no hover */
-.bio-link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(201, 169, 110, 0.08),
-        transparent
-    );
-    transition: left 0.6s ease;
-    pointer-events: none;
-}
-
-.bio-link:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--color-accent);
-    background: var(--color-bg-soft);
-}
-
-.bio-link:hover::before {
-    left: 100%;
-}
-
-.bio-link:active {
-    transform: translateY(0) scale(0.98);
-    box-shadow: var(--shadow-sm);
-    transition-duration: 80ms;
-}
-
-/* Botão primário (Agendar) — destaque dourado */
-.bio-link-primary {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-    color: var(--color-bg);
-}
-
-.bio-link-primary .bio-link-subtitle {
-    color: rgba(242, 237, 227, 0.85);
-}
-
-.bio-link-primary:hover {
-    background: var(--color-accent-hover);
-    border-color: var(--color-accent-hover);
-}
-
-.bio-link-primary::before {
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.15),
-        transparent
-    );
-}
-
-/* Botão WhatsApp — destaque verde */
-.bio-link-whatsapp {
-    background: var(--color-whatsapp);
-    border-color: var(--color-whatsapp);
-    color: #FFFFFF;
-}
-
-.bio-link-whatsapp .bio-link-subtitle {
-    color: rgba(255, 255, 255, 0.85);
-}
-
-.bio-link-whatsapp:hover {
-    background: var(--color-whatsapp-dark);
-    border-color: var(--color-whatsapp-dark);
-}
-
-.bio-link-whatsapp::before {
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.18),
-        transparent
-    );
-}
-
-/* Conteúdo dos botões */
-.bio-link-icon {
-    font-size: 1.5rem;
-    line-height: 1;
+/* Ponto da parada — FORMA carrega o estado, não a cor.
+   Ancorado na linha da rota por posição absoluta, não por margem frágil. */
+.parada-ponto {
     flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-accent-soft);
-    border-radius: var(--radius-md);
-    transition: transform var(--t-base);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--papel);              /* vazado: miolo é o papel */
+    border: 2px solid var(--linha-forte);  /* inativo: linha fina */
+    position: absolute;
+    left: calc(var(--goteira-rota) * -1 + 10px);  /* centro na linha da rota */
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition:
+        border-color var(--m-base),
+        border-width var(--m-base),
+        background-color var(--m-base),
+        transform var(--m-base);
+    z-index: 1;
 }
 
-.bio-link-primary .bio-link-icon,
-.bio-link-whatsapp .bio-link-icon {
-    background: rgba(255, 255, 255, 0.2);
-}
+/* A parada precisa de posição para ancorar o ponto */
+.parada { position: relative; }
 
-.bio-link:hover .bio-link-icon {
-    transform: scale(1.08) rotate(-3deg);
-}
-
-.bio-link-text {
-    flex: 1;
+.parada-corpo {
     display: flex;
     flex-direction: column;
     gap: 2px;
     min-width: 0;
 }
 
-.bio-link-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.3;
-    color: inherit;
+.parada-rotulo {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--tinta-muted);
 }
 
-.bio-link-subtitle {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-    line-height: 1.3;
+.parada-titulo {
+    font-family: var(--f-titulo);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--tinta);
+    text-wrap: balance;
 }
+
+.parada-nota {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--tinta-muted);
+}
+
+/* Hover / foco: a parada acende o ponto e destaca */
+@media (hover: hover) {
+    .parada--desvio:hover {
+        background: var(--papel-alto);
+    }
+}
+
+.parada--desvio:hover .parada-ponto,
+.parada--desvio:focus-visible .parada-ponto {
+    border-color: var(--dourado);
+    border-width: 3px;
+    transform: scale(1.06);
+}
+
+.parada--desvio:hover .parada-titulo {
+    color: var(--dourado-tinta);
+}
+
+.parada:active { transform: scale(0.985); }
+
+/* ----- DESTINO: a maior parada, única em dourado cheio ----- */
+.parada--destino {
+    background: var(--dourado);
+    border-radius: var(--r-lg);
+    padding: var(--e-lg) var(--e-md);
+    box-shadow: var(--sombra-destino);
+    align-items: center;
+    color: var(--tinta);
+    transition:
+        background-color var(--m-base),
+        transform var(--m-base),
+        box-shadow var(--m-base);
+}
+
+.parada--destino .parada-ponto {
+    width: 18px;
+    height: 18px;
+    background: var(--tinta);              /* cheio: forma de destino */
+    border: 2px solid var(--papel);
+    box-shadow: 0 0 0 3px var(--dourado);
+}
+
+.parada--destino .parada-rotulo {
+    color: var(--destino-suave);
+}
+
+.parada--destino .parada-titulo {
+    font-size: 1.3rem;
+}
+
+.parada--destino .parada-nota {
+    color: var(--destino-suave);
+    font-weight: 500;
+}
+
+@media (hover: hover) {
+    .parada--destino:hover {
+        background: var(--dourado-forte);
+        transform: translateY(-2px);
+        box-shadow: var(--sombra-destino), 0 14px 30px rgba(127, 98, 56, 0.2);
+    }
+}
+
+.parada--destino:active { transform: scale(0.985); }
 
 /* ==========================================================
-   RODAPÉ
+   CHEGADA — rodapé
    ========================================================== */
-.bio-footer {
-    text-align: center;
-    width: 100%;
-    padding-top: var(--space-lg);
-    border-top: 1px solid var(--color-line);
+.chegada {
+    position: relative;
+    padding-left: var(--goteira-rota);
+    padding-top: var(--e-lg);
+    border-top: 1px solid var(--linha);
 }
 
-.bio-footer-text {
-    font-family: var(--font-heading);
+.chegada-frase {
+    font-family: var(--f-titulo);
     font-style: italic;
-    font-size: 0.95rem;
-    color: var(--color-text-soft);
-    margin-bottom: var(--space-sm);
+    font-size: 1rem;
     line-height: 1.5;
+    color: var(--tinta-soft);
+    margin-bottom: var(--e-sm);
+    max-width: 34ch;
 }
 
-.bio-footer-credit {
+.chegada-credito {
     font-size: 0.7rem;
-    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+    color: var(--tinta-muted);
     display: inline-flex;
     align-items: center;
-    gap: var(--space-xs);
-    letter-spacing: 0.05em;
+    gap: var(--e-xs);
 }
 
-.bio-footer-credit span:first-child {
-    color: var(--color-accent);
+.chegada-credito span:first-child {
+    color: var(--dourado-tinta);
     font-size: 0.85rem;
 }
 
 /* ==========================================================
-   ANIMAÇÕES DE ENTRADA
+   ENTRADA — um momento, não um por seção
    ========================================================== */
-[data-animate] {
+[data-entra] {
     opacity: 0;
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    transform: translateY(12px);
+    animation: entrar var(--m-base) forwards;
 }
 
-[data-animate="fade-up"] {
-    transform: translateY(20px);
-}
+[data-entra="1"] { animation-delay: 60ms; }
+[data-entra="2"] { animation-delay: 140ms; }
+[data-entra="3"] { animation-delay: 200ms; }
+[data-entra="4"] { animation-delay: 260ms; }
 
-[data-animate="fade-down"] {
-    transform: translateY(-20px);
-}
-
-[data-animate].visible {
-    opacity: 1;
-    transform: translateY(0);
+@keyframes entrar {
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ==========================================================
-   PÁGINA DE CONTEÚDO (Conheça meu trabalho)
+   PÁGINA DE CONTEÚDO — Conheça meu trabalho
    ========================================================== */
-
-.bio-container--conteudo {
-    align-items: stretch;
-    text-align: left;
-}
+.rota--conteudo { max-width: var(--largura); }
 
 .voltar {
-    align-self: flex-start;
     display: inline-flex;
     align-items: center;
-    gap: var(--space-xs);
+    gap: var(--e-xs);
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-text-soft);
-    /* min-height garante alvo de toque >= 44px (WCAG 2.5.5) */
-    min-height: 44px;
-    padding: var(--space-xs) var(--space-sm);
-    margin: 0 0 var(--space-lg) calc(var(--space-sm) * -1);
-    border-radius: var(--radius-sm);
-    transition: color var(--t-fast), background-color var(--t-fast);
+    color: var(--tinta-soft);
+    min-height: 44px;                /* alvo de toque (WCAG 2.5.5) */
+    padding: var(--e-xs) var(--e-sm);
+    margin: 0 0 var(--e-lg) calc(var(--e-sm) * -1);
+    border-radius: var(--r-sm);
+    transition: color var(--m-rapido), background-color var(--m-rapido);
 }
 
-.voltar:hover {
-    color: var(--color-text);
-    background: var(--color-bg-soft);
-}
-
-.voltar span {
-    transition: transform var(--t-base);
-}
-
-.voltar:hover span {
-    transform: translateX(-3px);
-}
+.voltar:hover { color: var(--tinta); background: var(--papel-alto); }
+.voltar span { transition: transform var(--m-base); }
+.voltar:hover span { transform: translateX(-3px); }
 
 .conteudo-header {
-    text-align: center;
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--e-2xl);
 }
 
-.conteudo-header .bio-avatar {
-    margin-bottom: var(--space-md);
-}
+.conteudo-header .origem-brasao { margin-bottom: var(--e-md); }
 
 .bloco {
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--e-2xl);
+    max-width: 62ch;
 }
 
 /* Mais espaço acima do título do que abaixo (craft floor) */
 .bloco-titulo {
-    font-family: var(--font-heading);
-    font-size: 1.35rem;
+    font-family: var(--f-titulo);
+    font-size: 1.4rem;
     font-weight: 600;
-    color: var(--color-text);
     line-height: 1.25;
-    margin-bottom: var(--space-sm);
+    color: var(--tinta);
+    margin-bottom: var(--e-sm);
     text-wrap: balance;
 }
 
 .bloco-titulo::after {
     content: '';
     display: block;
-    width: 36px;
+    width: 34px;
     height: 2px;
-    margin-top: var(--space-sm);
-    background: var(--color-accent);
-    border-radius: var(--radius-full);
+    margin-top: var(--e-sm);
+    background: var(--dourado);
+    border-radius: var(--r-full);
 }
 
 .bloco-texto {
     font-size: 0.95rem;
     line-height: 1.7;
-    color: var(--color-text-soft);
-    margin-bottom: var(--space-md);
+    color: var(--tinta-soft);
+    margin-bottom: var(--e-md);
     overflow-wrap: break-word;
 }
 
-.bloco-texto:last-child {
-    margin-bottom: 0;
-}
+.bloco-texto:last-child { margin-bottom: 0; }
 
-/* Lista de formação — sem cards, só marcação e ritmo */
+/* Formação — marcação e ritmo, sem cards */
 .lista-simples {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: var(--e-sm);
 }
 
 .lista-simples li {
     position: relative;
-    padding-left: var(--space-lg);
+    padding-left: var(--e-lg);
     font-size: 0.95rem;
     line-height: 1.6;
-    color: var(--color-text-soft);
+    color: var(--tinta-soft);
 }
 
 .lista-simples li::before {
@@ -532,22 +520,23 @@ button { font: inherit; cursor: pointer; }
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--color-accent);
+    background: var(--dourado);
 }
 
-/* Passos numerados por ordem real do processo */
+/* Passos — numerados pela ordem real do processo */
 .passos {
     list-style: none;
     counter-reset: passo;
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
-    margin-bottom: var(--space-lg);
+    gap: var(--e-lg);
+    margin-bottom: var(--e-lg);
 }
 
 .passo {
     position: relative;
-    padding-left: var(--space-xl);
+    padding-left: var(--e-xl);
+    max-width: 58ch;
 }
 
 .passo::before {
@@ -563,124 +552,87 @@ button { font: inherit; cursor: pointer; }
     justify-content: center;
     font-size: 0.75rem;
     font-weight: 700;
-    color: var(--color-bg);
-    background: var(--color-accent);
+    color: var(--papel);
+    background: var(--dourado-tinta);
     border-radius: 50%;
 }
 
 .passo h3 {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: var(--space-2xs);
+    color: var(--tinta);
+    margin-bottom: var(--e-2xs);
 }
 
 .passo p {
     font-size: 0.9rem;
     line-height: 1.65;
-    color: var(--color-text-soft);
+    color: var(--tinta-soft);
 }
 
-/* Ficha técnica — chave/valor alinhado, sem virar card */
+/* Ficha técnica — chave/valor, sem virar card */
 .ficha {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid var(--color-line);
+    border-top: 1px solid var(--linha);
+    max-width: 44ch;
 }
 
 .ficha-item {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: var(--space-md);
-    padding: var(--space-sm) 0;
-    border-bottom: 1px solid var(--color-line);
+    gap: var(--e-md);
+    padding: var(--e-sm) 0;
+    border-bottom: 1px solid var(--linha);
 }
 
-.ficha-item dt {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    font-weight: 500;
-}
-
+.ficha-item dt { font-size: 0.85rem; font-weight: 500; color: var(--tinta-muted); }
 .ficha-item dd {
     font-size: 0.9rem;
-    color: var(--color-text);
     font-weight: 600;
+    color: var(--tinta);
     text-align: right;
     font-variant-numeric: tabular-nums;
 }
 
-.bloco--cta {
-    margin-bottom: var(--space-xl);
-}
-
-.bloco--cta .bio-link {
-    width: 100%;
-}
+.bloco--cta { margin-bottom: var(--e-xl); }
+.bloco--cta .parada { width: 100%; }
 
 /* ==========================================================
    RESPONSIVIDADE
    ========================================================== */
 
-/* Telas muito pequenas (320px) */
+/* Muito estreito (320px) */
 @media (max-width: 359px) {
-    .bio-container {
-        padding-left: var(--space-md);
-        padding-right: var(--space-md);
-    }
-    .bio-avatar {
-        width: 80px;
-        height: 80px;
-    }
-    .bio-avatar-symbol { font-size: 2.5rem; }
-    .bio-link {
-        padding: var(--space-sm) var(--space-md);
-        gap: var(--space-sm);
-    }
-    .bio-link-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 1.25rem;
-    }
-    .bio-link-title { font-size: 0.875rem; }
-    .bio-link-subtitle { font-size: 0.7rem; }
+    :root { --goteira-rota: 34px; }
+    .rota { padding-left: var(--e-md); padding-right: var(--e-md); }
+    .origem-brasao { width: 58px; height: 58px; font-size: 1.8rem; }
+    .parada--destino { padding: var(--e-md) var(--e-sm); }
+    .parada--destino .parada-titulo { font-size: 1.15rem; }
+    .parada-titulo { font-size: 1.05rem; }
 }
 
-/* Tablets e telas médias */
+/* A partir de tablet */
 @media (min-width: 481px) {
-    .bio-container {
-        padding-top: var(--space-3xl, 4rem);
-        padding-bottom: var(--space-3xl, 4rem);
+    .rota {
+        padding-top: calc(var(--e-2xl) + 1.5rem);
+        padding-bottom: calc(var(--e-xl) + 1.5rem);
     }
-    .bio-avatar {
-        width: 110px;
-        height: 110px;
-    }
-    .bio-avatar-symbol { font-size: 3.5rem; }
 }
 
-/* Desktop — destaca com sombra e centraliza com fundo */
+/* Desktop — o itinerário repousa como uma folha */
 @media (min-width: 768px) {
     body {
-        padding: var(--space-xl) 0;
-        background: var(--color-bg);
+        padding: var(--e-xl) 0;
     }
-    .bio-container {
-        background: var(--color-bg);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow-lg);
-        margin: var(--space-xl) auto;
-        border: 1px solid var(--color-line);
+    .rota {
+        background: var(--papel);
+        border: 1px solid var(--linha);
+        border-radius: var(--r-lg);
+        box-shadow: var(--sombra-papel);
+        margin: var(--e-xl) auto;
+        padding: var(--e-2xl) var(--e-xl);
     }
-    .bio-links {
-        gap: var(--space-md);
-    }
-}
-
-/* Telas muito grandes */
-@media (min-width: 1024px) {
-    .bio-container {
-        margin: var(--space-2xl) auto;
-    }
+    .trajeto { gap: var(--e-sm); }
 }
