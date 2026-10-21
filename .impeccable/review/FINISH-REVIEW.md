@@ -24,6 +24,10 @@ REQUISITO do contrato, não contra um card.
 
 ## disposition: fix
 
+**Decisão do usuário (2026-10-21):** manter o marcador pendente no rodapé —
+"Registro profissional — CRP pendente de confirmação". Nada é publicado até a
+revisão visual do usuário e a aprovação explícita.
+
 ## persistence — pass
 
 - `PRODUCT.md` existe na branch (commit `c652fb1`).
